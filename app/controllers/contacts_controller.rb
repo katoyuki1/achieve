@@ -19,6 +19,7 @@ class ContactsController < ApplicationController
         if @contact.save
         flash[:success] = 'お問い合わせありがとうございました！'
         redirect_to root_path
+        ContactMailer.sendmail_contact(@contact).deliver
         else
         render action: 'new'
         end
