@@ -1,4 +1,3 @@
-
 100.times do |n|
   email = "example-#{n+1}@railstutorial.org"
   name  = Faker::Name.name
