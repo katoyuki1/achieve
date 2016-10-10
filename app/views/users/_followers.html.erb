@@ -1,0 +1,9 @@
+<div class="container">
+  <h2>フォロワー</h2>
+  <% @user.followers.each do |followers| %>
+      <div class="container-child col-md-2 col-sm-4 col-xs-6 ">
+        <%= profile_img(followers) %>
+        <%= followers.email %>
+      </div>
+  <% end %>
+</div>

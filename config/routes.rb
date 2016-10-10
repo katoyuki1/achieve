@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   
   resources :blogs do
     resources :comments
-    
     collection do
       post :confirm
     end
@@ -21,6 +20,10 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
+  
+  resources :users, only: [:index, :show]
+  
+  resources :relationships, only: [:create, :destroy]
   
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
