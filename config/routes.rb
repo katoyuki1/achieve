@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   root 'top#index'
@@ -21,7 +22,17 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :users, only: [:index, :show]
+  resources :users, only: [:index, :show, :edit, :update] do
+    resources :tasks
+    resources :submit_requests, shallow: true do
+      get 'approve'
+      get 'unapprove'
+      get 'reject'
+      collection do
+        get 'inbox'
+      end
+    end
+  end
   
   resources :relationships, only: [:create, :destroy]
   
