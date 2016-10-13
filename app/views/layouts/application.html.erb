@@ -2,9 +2,22 @@
 <html>
 <head>
   <title>Achieve</title>
+  <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+    <% if user_signed_in? %>
+    <script>
+      var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>',{
+        encrypted: true
+      });
+
+      var channel = pusher.subscribe("user_<%= current_user.id %>_channel");
+      channel.bind('comment_created', function(data) {
+        alert(data.message);
+      });
+    </script>
+  <% end %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -33,6 +46,7 @@
             <li><%= link_to 'ユーザー一覧', users_path if user_signed_in? %></li>
             <li><%= link_to "ブログ", blogs_path %></li>
             <li><%= link_to '新規依頼', user_submit_requests_path(current_user) if user_signed_in? %></li>
+            <li><%= link_to "メッセージ", conversations_path %></li>
           </ul>
         </li>
         <% if user_signed_in? %>

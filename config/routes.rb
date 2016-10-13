@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :tasks
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   root 'top#index'
@@ -32,6 +31,12 @@ Rails.application.routes.draw do
         get 'inbox'
       end
     end
+  end
+  
+  resources :tasks
+  
+  resources :conversations do
+    resources :messages
   end
   
   resources :relationships, only: [:create, :destroy]
